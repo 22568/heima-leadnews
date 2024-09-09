@@ -23,7 +23,9 @@ import com.heima.utils.thread.WmThreadLocalUtils;
 import com.heima.wemedia.mapper.WmMaterialMapper;
 import com.heima.wemedia.mapper.WmNewsMapper;
 import com.heima.wemedia.mapper.WmNewsMaterialMapper;
+import com.heima.wemedia.service.WmNewsAutoScanService;
 import com.heima.wemedia.service.WmNewsService;
+import com.heima.wemedia.service.WmNewsTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.data.Json;
 import org.apache.commons.lang3.StringUtils;
@@ -40,13 +42,16 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@Transactional
 public class WmNewsServiceImpl  extends ServiceImpl<WmNewsMapper, WmNews> implements WmNewsService {
 
     @Autowired
     WmNewsMaterialMapper wmNewsMaterialMapper;
     @Autowired
     WmMaterialMapper wmMaterialMapper;
+    @Autowired
+    private WmNewsAutoScanService wmNewsAutoScanService;
+    @Autowired
+    private WmNewsTaskService wmNewsTaskService;
     @Override
     public ResponseResult findAll(WmNewsPageReqDto dto) {
 
@@ -99,7 +104,7 @@ public class WmNewsServiceImpl  extends ServiceImpl<WmNewsMapper, WmNews> implem
 
         return responseResult;
     }
-
+    @Transactional
     @Override
     public ResponseResult submitNews(WmNewsDto dto) {
         //0.条件判断
@@ -125,6 +130,9 @@ public class WmNewsServiceImpl  extends ServiceImpl<WmNewsMapper, WmNews> implem
         saveRelativeUrlInfoContent(url,wmNews.getId());
         //4.不是草稿，保存文章封面图片与素材的关系，如果当前布局是自动，需要匹配封面图片
         saveRelativeUrlInfoCover(url,dto,wmNews);
+        //审核文章
+        //wmNewsAutoScanService.autoScanWmNews(wmNews.getId());
+        wmNewsTaskService.addNewsToTask(wmNews.getId(),wmNews.getPublishTime());
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
 /**
@@ -160,8 +168,8 @@ public class WmNewsServiceImpl  extends ServiceImpl<WmNewsMapper, WmNews> implem
         }
 
     }
-
-    private void saveRelativeUrlInfoContent(List<String> url, Integer newsId) {
+    @Transactional
+    public void saveRelativeUrlInfoContent(List<String> url, Integer newsId) {
         saveRelativeInfo(url,newsId,WemediaConstants.WM_CONTENT_REFERENCE);
     }
     @Transactional

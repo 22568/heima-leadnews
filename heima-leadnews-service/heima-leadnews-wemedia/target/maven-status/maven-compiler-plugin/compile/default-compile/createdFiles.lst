@@ -1,0 +1,14 @@
+com\heima\wemedia\mapper\WmUserMapper.class
+com\heima\wemedia\service\WmUserService.class
+com\heima\wemedia\service\impl\WmUserServiceImpl.class
+com\heima\wemedia\service\WmNewsAutoScanService.class
+com\heima\wemedia\service\WmMaterialService.class
+com\heima\wemedia\mapper\WmMaterialMapper.class
+com\heima\wemedia\WemediaApplication.class
+com\heima\wemedia\interceptor\WmTokenInterceptor.class
+com\heima\wemedia\config\WebMvcConfig.class
+com\heima\wemedia\service\impl\WmNewsAutoScanServiceImpl.class
+com\heima\wemedia\controller\v1\LoginController.class
+com\heima\wemedia\controller\v1\WmMaterialController.class
+com\heima\wemedia\service\impl\WmMaterialServiceImpl.class
+com\heima\wemedia\service\impl\WmNewsServiceImpl.class
