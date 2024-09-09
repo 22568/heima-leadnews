@@ -1,0 +1,9 @@
+
+POST http://localhost:51601/user/api/v1/login/login_auth
+Content-Type: application/json
+
+{
+"phone": "13511223456",
+"password": "admin"
+}
+###

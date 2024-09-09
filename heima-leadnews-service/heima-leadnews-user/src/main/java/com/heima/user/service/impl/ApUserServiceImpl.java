@@ -20,7 +20,6 @@ import java.util.Map;
 
 
 @Service
-@Transactional
 @Slf4j
 public class ApUserServiceImpl extends ServiceImpl<ApUserMapper, ApUser> implements ApUserService {
     /**
@@ -28,6 +27,7 @@ public class ApUserServiceImpl extends ServiceImpl<ApUserMapper, ApUser> impleme
      * @param dto
      * @return
      */
+    @Transactional
     @Override
     public ResponseResult login(LoginDto dto) {
         //1.正常登录 用户名和密码

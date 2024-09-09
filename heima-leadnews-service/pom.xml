@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>heima-leadnews-user</module>
+        <module>heima-leadnews-article</module>
+        <module>heima-leadnews-wemedia</module>
     </modules>
 
     <properties>
@@ -29,6 +31,12 @@
         <dependency>
             <groupId>com.heima</groupId>
             <artifactId>heima-leadnews-common</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>logback-classic</artifactId>
+                    <groupId>ch.qos.logback</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.heima</groupId>
